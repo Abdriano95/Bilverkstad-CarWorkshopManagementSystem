@@ -44,7 +44,7 @@ The application implements **two separate presentation layers** - one using trad
 ## 📸 Screenshots
 
 ### Login Screen
-Secure employee authentication with role-based access control.
+Employee login with role-based access control.
 
 ![Login Screen](docs/screenshots/login.png)
 
@@ -161,7 +161,7 @@ flowchart TB
 ### Project Structure
 
 ```
-OOPC-VT24-Grupp-7/
+Bilverkstad-CarWorkshopManagementSystem/
 ├── Bilverkstad.Entitetlagret/          # Domain Entities
 │   ├── Anställd.cs                     # Base Employee class
 │   ├── Mekaniker.cs                    # Mechanic (inherits Anställd)
@@ -484,8 +484,8 @@ erDiagram
 ### Soft Skills
 
 **Team Collaboration**
-- Collaborative development with 3 team members
-- Pull request workflow (272+ PRs)
+- Collaborative development with 2 team members
+- Pull request workflow (272 PRs)
 - Code review practices
 - Git branching strategies
 
@@ -508,18 +508,23 @@ erDiagram
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Abdriano95/OOPC-VT24-Grupp-7.git
-   cd OOPC-VT24-Grupp-7
+   git clone https://github.com/Abdriano95/Bilverkstad-CarWorkshopManagementSystem.git
+   cd Bilverkstad-CarWorkshopManagementSystem
    ```
 
-2. **Update the connection string**
+2. **Configure the connection string**
    
-   Edit `Bilverkstad.Datalager/BilverkstadContext.cs` and update the connection string:
-   ```csharp
-   optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=Bilverkstad;Trusted_Connection=True;");
+   Copy `Bilverkstad.Presentationslager.MVVM/appsettings.example.json` to `appsettings.json` in the same folder (the file is git-ignored) and set `ConnectionStrings:BilverkstadDatabase`:
+   ```json
+   {
+     "ConnectionStrings": {
+       "BilverkstadDatabase": "Server=(localdb)\\mssqllocaldb;Database=Bilverkstad;Trusted_Connection=True;"
+     }
+   }
    ```
+   The MVVM app uses this connection on startup to apply the migrations and seed the test data. All other data access (in both presentation projects, through `UnitOfWork`) uses the default connection in `BilverkstadContext`, which is the same LocalDB database as above, so keep the two pointing to the same database.
 
-3. **Apply database migrations**
+3. **Apply database migrations** (only needed for the traditional WPF project)
    ```bash
    cd Bilverkstad.Datalager
    dotnet ef database update
@@ -531,7 +536,7 @@ erDiagram
    - `Bilverkstad.Presentationslager` - Traditional WPF
    - `Bilverkstad.Presentationslager.MVVM` - MVVM Pattern (recommended)
 
-5. **Login credentials** (from seed data)
+5. **Login credentials** (seed data, created by the MVVM app on first start)
    - Admin: Employee ID `1`, Password: `123`
    - Mechanic: Employee ID `2`, Password: `pwd12345`
 
@@ -541,12 +546,12 @@ erDiagram
 
 | Metric | Value |
 |--------|-------|
-| **Total Lines of Code** | ~10,000 |
-| **C# Code** | ~7,250 lines |
-| **XAML Markup** | ~2,700 lines |
-| **Total Commits** | 488 |
-| **Pull Requests** | 272+ |
-| **C# Files** | 120+ |
+| **Total Lines of Code** | ~9,300 |
+| **C# Code** | ~7,100 lines (incl. EF Core migrations) |
+| **XAML Markup** | ~2,200 lines |
+| **Commits (April 9 - May 17, 2024)** | 488 |
+| **Pull Requests** | 272 |
+| **C# Files** | 93 |
 | **Development Period** | April 9 - May 17, 2024 |
 | **Duration** | ~6 weeks |
 
