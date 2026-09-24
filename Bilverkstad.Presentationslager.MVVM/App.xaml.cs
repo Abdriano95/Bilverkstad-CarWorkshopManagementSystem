@@ -71,6 +71,9 @@ namespace Bilverkstad.Presentationslager.MVVM
                     throw new InvalidOperationException("Connection string 'BilverkstadDatabase' not found in appsettings.json");
                 }
 
+                // All data access through UnitOfWork uses this connection from now on
+                BilverkstadContext.DefaultConnectionString = connectionString;
+
                 using var context = new BilverkstadContext(connectionString);
                 
                 // Ensure database is created and apply migrations

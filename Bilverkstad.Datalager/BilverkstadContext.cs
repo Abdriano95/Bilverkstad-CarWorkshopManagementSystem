@@ -7,6 +7,10 @@ namespace Bilverkstad.Datalager
     {
         private readonly string? _connectionString;
 
+        // Used when a context is created without a connection string (e.g. by UnitOfWork).
+        // The MVVM app sets it from appsettings.json at startup.
+        public static string? DefaultConnectionString { get; set; }
+
         public DbSet<Kund> Kund { get; set; }
         public DbSet<Anställd> Anställd { get; set; }
         public DbSet<Bokning> Bokning { get; set; }
@@ -27,7 +31,7 @@ namespace Bilverkstad.Datalager
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = _connectionString ?? @"Server=(localdb)\mssqllocaldb;Database=Bilverkstad;Trusted_Connection=True;";
+                var connectionString = _connectionString ?? DefaultConnectionString ?? @"Server=(localdb)\mssqllocaldb;Database=Bilverkstad;Trusted_Connection=True;";
                 optionsBuilder.UseSqlServer(connectionString);
             }
             base.OnConfiguring(optionsBuilder);
