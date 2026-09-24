@@ -522,7 +522,7 @@ erDiagram
      }
    }
    ```
-   The MVVM app uses this connection on startup to apply the migrations and seed the test data. All other data access (in both presentation projects, through `UnitOfWork`) uses the default connection in `BilverkstadContext`, which is the same LocalDB database as above, so keep the two pointing to the same database.
+   The MVVM app uses this connection for all data access, and applies the migrations and seeds the test data on startup. The traditional WPF project does not read `appsettings.json`; it uses the default connection in `BilverkstadContext` (`(localdb)\mssqllocaldb`, database `Bilverkstad`).
 
 3. **Apply database migrations** (only needed for the traditional WPF project)
    ```bash
@@ -537,8 +537,8 @@ erDiagram
    - `Bilverkstad.Presentationslager.MVVM` - MVVM Pattern (recommended)
 
 5. **Login credentials** (seed data, created by the MVVM app on first start)
-   - Admin: Employee ID `1`, Password: `123`
-   - Mechanic: Employee ID `2`, Password: `pwd12345`
+   - Admin (receptionist): Employee ID `3`, Password: `123`
+   - Mechanic: Employee ID `1`, Password: `pwd12345`
 
 ---
 
